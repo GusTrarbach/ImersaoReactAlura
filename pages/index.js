@@ -1,63 +1,30 @@
 import config from "../config.json"
-import styled from "styled-components"
-import { CSSReset } from "../src/components/CSSReset";
 import Menu from "../src/components/Menu/Index";
 import { StyledTimeline } from "../src/components/Timeline";
 import React from "react";
+import Favorites from "../src/components/Favoritos";
+import Header from "../src/components/Header/Header";
 
 function HomePage() {
     const [valorDoFiltro, setValorDoFiltro] = React.useState("");
 
     return (
         <>
-            <CSSReset />
             <div style={{
                 display: "flex",
                 flexDirection: "column",
-                flex: 1,
+                flex: 1
             }}>
                 <Menu valorDoFiltro={valorDoFiltro} setValorDoFiltro={setValorDoFiltro} />
-                <Header />
+                <Header config={config} />
                 <Timeline searchValue={valorDoFiltro} playlists={config.playlists} />
+                <Favorites favorites={config.favorites} />
             </div>
         </>
     );
 }
 
 export default HomePage
-
-
-
-const StyledHeader = styled.div`
-    img{
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-    }
-    .user-info{
-        margin-top: 50px;
-        display: flex;
-        align-items: center;
-        width: 100%;
-        padding: 16px 32px;
-        gap: 16px;
-    }
-`;
-
-
-function Header() {
-    return (
-        <StyledHeader>
-            <section className="user-info">
-                <img src={`https://github.com/${config.github}.png`} />
-                <div>
-                    <h2>{config.name}</h2>
-                    <p>{config.job}</p>
-                </div>
-            </section>
-        </StyledHeader>
-    );
-}
 
 function Timeline({ searchValue, ...props }) {
     const playlistNames = Object.keys(config.playlists);
